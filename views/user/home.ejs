@@ -1,0 +1,70 @@
+<div class="" style="margin: 3rem;">
+    <h1>Generate id to upload a csv file</h1>
+    <a href="/generate">
+        <input type="button" value="Generate Id">
+    </a>
+
+    <div>
+        <table style="border: 1px solid black; margin-top: 2rem; width: fit-content;">
+            <tr>
+                <th style="border: 1px solid black;">#</th>
+                <th style="border: 1px solid black;">Id</th>
+            </tr>
+            <% for(let i in ids) { %>
+                <tr>
+                    <td style="border: 1px solid black;"><%= i %></td>
+                    <td style="border: 1px solid black;"><%= ids[i]._id %></td>
+                </tr>
+            <% } %>
+        </table>
+    </div>
+
+    <div>
+        <h1>find a file data </h1>
+        <input type="text" id="id" placeholder="Enter file id" name="id">
+        <button type="button" id="submitButton">Submit</button>
+    </div>
+
+    <div id="csvdetails">
+        <table id="myTable" style="border: 1px solid black;">
+            <thead>
+                <tr id="tableHead" style="border: 1px solid black;">
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
+    document.getElementById('submitButton').addEventListener("click", displayDetails);
+    function displayDetails() {
+        document.getElementById("myTable").value = ''
+        let id = document.getElementById('id').value;
+        axios.get(`/csv/${id}`).then(res => {
+            let data = res.data.details
+
+            let headers = Object.keys(data[0])
+            let head = [];
+            for (let i in headers) {
+                head[i] = `<th style="border: 1px solid black;">${headers[i]}</th>`
+            }
+            document.getElementById("tableHead").innerHTML = head.join(' ')
+            let body = [];
+            data.map((data, i) => {
+                let values = Object.values(data)
+                let tr = []
+                for (let i in values) {
+                    tr[i] = `<td style="border: 1px solid black;">${values[i]}</td>`
+                }
+                body[i] = `<tr>${tr.join(' ')}</tr>`
+            })
+            document.getElementById("tableBody").innerHTML = body.join(' ')
+
+        })
+    }
+</script>

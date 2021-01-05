@@ -3,7 +3,7 @@ const state = {
     db: null
 }
 module.exports.connect = function(done) {
-    const url = 'mongodb://localhost:27017'
+    const url = 'mongodb+srv://Hashim:Hashim@30@cluster0.wysex.mongodb.net/CSVTest?retryWrites=true&w=majority'
     const dbname = 'CSVTest'
 
     mongoClient.connect(url, { useUnifiedTopology: true }, (err, data) => {

@@ -1,0 +1,8 @@
+<div style="padding: 3rem;">
+    <h1>Upload csv file</h1>
+    <h4>Your Id : <%= objId %></h4>
+    <form action="/addfile/<%= objId %>" method="POST" enctype="multipart/form-data">
+        <input type="file" name="csvfile" accept=".csv">
+        <button type="submit">Submit</button>
+    </form>
+</div>
